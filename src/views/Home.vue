@@ -45,8 +45,8 @@
         // let directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
         // this.scene.add( directionalLight );
 
-        let axes = new THREE.AxesHelper(100000)
-        this.scene.add(axes)
+        // let axes = new THREE.AxesHelper(100000)
+        // this.scene.add(axes)
 
         let container = document.getElementById('container')
         let width = container.clientWidth// 窗口宽度
@@ -79,11 +79,20 @@
         land.position.x = size * column / 2
         land.position.z = size * row / 2
         land.rotation.x = -Math.PI / 2
+
+        let maxHeight = 0
+        let minHeight = 10000
+        data.forEach(v=>{
+          maxHeight = Math.max(maxHeight, v)
+          minHeight = Math.min(minHeight, v)
+        })
+
         let vertices = []
         for (let i = 0; i < row; i++) {
           for (let j = 0; j < column; j++) {
             const height = data[column * i + j]
-            vertices.push(new THREE.Vector3(size * j, height - 2200, size * i))
+            const newHeight = (height - (maxHeight - minHeight) / 2) * 2 + (maxHeight-minHeight)
+            vertices.push(new THREE.Vector3(size * j, newHeight, size * i))
           }
         }
 
