@@ -89,14 +89,12 @@
 
           this.earthworm.scale.set(1000, 1000, 1000);
           this.earthworm.rotation.set(Math.PI, 0, 0)
-          // this.earthworm.position.set(15, 0, 0);
+          this.earthworm.position.set(15, 0, 0);
 
-
-
-
-
+          this.earthworm.children.forEach(v=>{
+            this.earthwormPosArr.push(v.position)
+          })
           this.earthworm.traverse(child => {
-            // this.earthwormPosArr.push(child.position)
             if (child.isMesh) {
               child.material.envMap = textureCube;
               child.material.envMapIntensity = 2;
@@ -204,6 +202,7 @@
           this.earthwormPosArr.forEach((v,i)=>{
             const obj = this.earthworm.children[i]
             // obj.scale.set(1000, 1000, 1000);
+            console.log(obj)
             obj.position = v
           })
         }
