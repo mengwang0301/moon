@@ -92,8 +92,11 @@
           this.earthworm.position.set(15, 0, 0);
 
           this.earthworm.children.forEach(v=>{
-            this.earthwormPosArr.push(v.position)
+            v.updateMatrixWorld()
+
+            this.earthwormPosArr.push(v.position.applyMatrix4(v.matrixWorld))
           })
+          console.log(this.earthwormPosArr)
           this.earthworm.traverse(child => {
             if (child.isMesh) {
               child.material.envMap = textureCube;
@@ -152,7 +155,7 @@
             // S
             case 83:
               console.log('sssssssssssssssssssssss')
-              this.zOffset = 1
+              this.zOffset = -1
               break;
 
             // d
@@ -164,7 +167,7 @@
             // w
             case 87:
               console.log('wwwwwwwwwwwwwwwwwwwwwwwww')
-              this.zOffset = -1
+              this.zOffset = 1
               break;
 
           }
@@ -202,7 +205,6 @@
           this.earthwormPosArr.forEach((v,i)=>{
             const obj = this.earthworm.children[i]
             // obj.scale.set(1000, 1000, 1000);
-            console.log(obj)
             obj.position = v
           })
         }
