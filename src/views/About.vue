@@ -70,8 +70,37 @@
         // let earthworm
 
         loader.load(`${process.env.BASE_URL}models/jiantou.gltf`, gltf => {
-          // let children = []
-          // const group = new THREE.Group()
+          const group = new THREE.Group()
+
+          gltf.scene.children.forEach(v=>{
+            group.add(v)
+          })
+          this.earthworm = group
+          this.earthworm.scale.set(1000, 1000, 1000);
+          this.earthworm.rotation.set(Math.PI, 0, 0)
+          this.earthworm.position.set(15, 0, 0);
+
+          group.children.forEach(v=>{
+            let target = new THREE.Vector3()
+
+            v.getWorldPosition( target );
+            this.earthwormPosArr.push(target)
+
+            // v.position.set(target.x, target.y, target.z)
+          })
+
+          // gltf.scene.children.forEach(v=>{
+          //   let target = new THREE.Vector3()
+          //
+          //   v.getWorldPosition( target );
+          //   this.earthwormPosArr.push(target)
+          //
+          //   v.position.set(target.x, target.y, target.z)
+          //   group.add(v)
+          // })
+
+          console.log(this.earthwormPosArr)
+
           // for (let i = 0; i < 5; i++) {
           //   const child = gltf.scene.children[0];
           //   child.position.set((5-i)*10, 0, 0)
@@ -79,24 +108,20 @@
           //   // children.push(child)
           //   group.add(child)
           // }
-          this.earthworm = gltf.scene;
-          // this.earthworm = gltf.scene.children[0];
-
-          // group.children = children
-          // console.log(group)
-          // this.earthworm = group
-          // console.log(gltf.scene)
-
-          this.earthworm.scale.set(1000, 1000, 1000);
-          this.earthworm.rotation.set(Math.PI, 0, 0)
-          this.earthworm.position.set(15, 0, 0);
-
-          this.earthworm.children.forEach(v=>{
-            v.updateMatrixWorld()
-
-            this.earthwormPosArr.push(v.position.applyMatrix4(v.matrixWorld))
-          })
-          console.log(this.earthwormPosArr)
+          // this.earthworm = gltf.scene;
+          // this.earthworm.scale.set(1000, 1000, 1000);
+          // this.earthworm.rotation.set(Math.PI, 0, 0)
+          // this.earthworm.position.set(15, 0, 0);
+          //
+          // this.earthworm.children.forEach(v=>{
+          //   // v.updateMatrixWorld()
+          //   //
+          //   // this.earthwormPosArr.push(v.position.applyMatrix4(v.matrixWorld))
+          //   let target = new THREE.Vector3()
+          //
+          //   v.getWorldPosition( target );
+          //   this.earthwormPosArr.push(target)
+          // })
           this.earthworm.traverse(child => {
             if (child.isMesh) {
               child.material.envMap = textureCube;
@@ -194,7 +219,10 @@
           // if (this.xOffset ===0 && this.zOffset === 0) {
           //   return
           // }
-          const pos = new THREE.Vector3(this.earthwormPosArr[0].x += this.xOffset/1000, this.earthwormPosArr[0].y, this.earthwormPosArr[0].z += this.zOffset/1000)
+          const pos = new THREE.Vector3(this.earthwormPosArr[0].x += this.xOffset, this.earthwormPosArr[0].y, this.earthwormPosArr[0].z += this.zOffset)
+          // console.log('pos')
+          // console.log(pos)
+          // console.log('------')
 
           this.earthwormPosArr.splice(0,0, pos)
           // console.log(this.earthwormPosArr.length)
@@ -202,11 +230,11 @@
           // console.log(this.earthwormPosArr.length)
           // console.log('----------')
           // console.log(this.earthwormPosArr)
-          this.earthwormPosArr.forEach((v,i)=>{
-            const obj = this.earthworm.children[i]
-            // obj.scale.set(1000, 1000, 1000);
-            obj.position = v
-          })
+          // this.earthwormPosArr.forEach((v,i)=>{
+          //   const obj = this.earthworm.children[i]
+          //   // obj.scale.set(1000, 1000, 1000);
+          //   obj.position = v
+          // })
         }
       },
 
